@@ -8,7 +8,12 @@ const port=3000
 app.use(express.static(path.join(__dirname,'public')));
 
 //HTTP logger
-app.use(morgan('combined'))
+// app.use(morgan('combined'))  
+
+app.use(express.urlencoded({
+  extended:true
+}))
+app.use(express.json())
 
 //template engine
 app.engine('hbs',handlebars({
@@ -24,6 +29,15 @@ app.get('/news', (req, res) => {
 })
  
 app.get('/', (req, res) => {
+  res.render('home')
+})
+
+app.get('/search', (req, res) => {
+  res.render('search')
+})
+
+app.post('/search', (req, res) => {
+  console.log(req.body.q)
   res.render('home')
 })
 
