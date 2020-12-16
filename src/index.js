@@ -27,9 +27,6 @@ app.set('view engine','hbs')
 app.set('views',path.join(__dirname,'resources/views'))
 
 // routes init
-// app.get('/search', (req, res) => {
-//   res.render('search')
-// })
 route(app)
 
 app.listen(port,() => console.log(`Listening at http://localhost:${port}`))
