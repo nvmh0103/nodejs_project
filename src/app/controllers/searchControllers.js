@@ -1,10 +1,8 @@
-class searchControllers{
-
+class searchControllers {
     // get /home
-    index(req,res){
+    index(req, res) {
         res.render('search');
     }
-    
 }
 
-module.exports=new searchControllers;
+module.exports = new searchControllers();
