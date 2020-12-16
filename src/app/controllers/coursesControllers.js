@@ -10,6 +10,15 @@ class courseControllers {
             })
             .catch(next);
     }
+    home(req, res, next) {
+        Course.find({})
+            .then((Courses) => {
+                Courses = util.arrayToObject(Courses);
+                // courses=courses.map(course=>course.toObject());
+                res.render('courses/coursesHome', { Courses });
+            })
+            .catch(next);
+    }
     create(req, res, next) {
         res.render('courses/create');
     }
