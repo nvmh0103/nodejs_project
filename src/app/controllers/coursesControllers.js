@@ -32,6 +32,19 @@ class courseControllers {
             .then(() => res.redirect(`/`))
             .catch((error) => {});
     }
+    edit(req,res,next){
+        Course.findOne({_id:req.params.id})
+            .then(Course=>{
+                res.render('courses/edit',{Course:util.objectToObject(Course)})
+            })
+            .catch(next);
+    }
+    // PUT
+    update(req,res,next){
+        Course.updateOne({_id:req.params.id},req.body)
+            .then(()=>res.redirect('/user/stored/courses'))
+            .catch(next);
+    }
 }
 
 module.exports = new courseControllers();

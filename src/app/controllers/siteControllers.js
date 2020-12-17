@@ -3,8 +3,8 @@ const util = require('../../util/mongoose.js');
 
 class siteControllers {
     // get /home
-    index(res, req, next) {
-        req.render('home');
+    index(req, res, next) {
+        res.render('home');
     }
     // get /search
 }
