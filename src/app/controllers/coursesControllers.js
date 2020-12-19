@@ -29,7 +29,7 @@ class courseControllers {
         const course = new Course(formData);
         course
             .save()
-            .then(() => res.redirect(`/`))
+            .then(() => res.redirect(`/user/stored/courses`))
             .catch((error) => {});
     }
     edit(req,res,next){
@@ -45,8 +45,19 @@ class courseControllers {
             .then(()=>res.redirect('/user/stored/courses'))
             .catch(next);
     }
-    // Delete
+    // Soft delete
     delete(req,res,next){
+        Course.delete({_id:req.params.id})
+            .then(()=>res.redirect('back'))
+            .catch(next);
+    }
+    restore(req,res,next){
+        Course.restore({_id:req.params.id})
+            .then(()=>res.redirect('back'))
+            .catch(next);
+    }
+    // force delete
+    forceDelete(req,res,next){
         Course.deleteOne({_id:req.params.id})
             .then(()=>res.redirect('back'))
             .catch(next);

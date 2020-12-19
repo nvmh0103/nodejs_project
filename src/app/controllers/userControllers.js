@@ -10,7 +10,14 @@ class userControllers {
             })
             .catch(next);
     }
-    // get /search
+    // trash courses
+    trashCourses(req,res,next){
+        Course.findDeleted({})
+            .then(Courses=>{
+                res.render('user/trashCourses',{Courses:util.arrayToObject(Courses)});
+            })
+            .catch(next);
+    }
 }
 
 module.exports = new userControllers();
