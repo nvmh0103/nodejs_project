@@ -1,13 +1,33 @@
 
 
-<div class="mt-4">
+<form class="mt-4" name="container-form" method="POST" action="/courses/handle-recycle-actions">
   <div>
     <h3>Khóa học đã xóa</h3>
     <a href="/user/stored/courses">Danh sách khóa học</a>
+    <div class="mt-4 d-flex align-items-center">
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" value="" id="checkbox-all">
+          <label for="checkbox-all" class="form-check-label" id=>
+            Chọn tất cả
+          </label>
+    </div>
+
+    <select name="action" class="form-control form-control-small checkbox-select-all-options" required> 
+          <option value="">-- Hành động --</option>
+          <option value="restore">Khôi phục</option>
+          <option value="force-delete">Xóa vĩnh viễn</option>
+    </select>
+
+
+    <button class="btn btn-primary btn-sm btn-check-all-submit disabled">
+          Thực hiện
+    </button>
+
   </div>
     <table class="table mt-4">
         <thead>
             <tr>
+                <th scope="col">Checkbox</th>
                 <th scope="col">#</th>
                 <th scope="col">Tên khóa học</th>
                 <th scope="col">Trình độ</th>
@@ -19,6 +39,11 @@
         <tbody>
             {{#each Courses}}
             <tr>
+                <td>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" value="{{this._id}}" name="courseIds[]" id="defaultCheckBox">
+                  </div>
+                </td>
                 <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
                 <td>{{this.level}}</td>
@@ -38,7 +63,7 @@
             {{/each}}
         </tbody>  
     </table> 
-</div>
+</form>
 
 {{!-- Confirm_delete --}}
 <div id="delete-course-modal" class="modal" tabindex="-1">
@@ -73,7 +98,8 @@
         var deleteForm=document.forms['delete-form'];
         var restoreForm=document.forms['restore-form'];
         var btnDeleteCourse=document.querySelector('.btn-delete-course');
-    
+        var courseItemCheckBox=$('input[name="courseIds[]"]');
+       
         $('#delete-course-modal').on('show.bs.modal',(event)=>{
             var button=$(event.relatedTarget);
             courseId=button.data('id');
@@ -93,5 +119,32 @@
         });
         })
 
+         $(document).ready(function(){
+          $("#checkbox-all").change(function(){
+              var isCheckedAll=$(this).prop('checked');
+              courseItemCheckBox.prop('checked',isCheckedAll);
+              renderCheckAllBtn();
+        });
+        })
+
+        // courses item checkbox changed
+
+        courseItemCheckBox.change(()=>{
+          var isCheckedAll=courseItemCheckBox.length === $('input[name="courseIds[]"]:checked').length;
+          $("#checkbox-all").prop('checked',isCheckedAll);
+          renderCheckAllBtn();
+          
+        })
+
+        // render submit button
+        renderCheckAllBtn=()=>{
+            var checkedCount=$('input[name="courseIds[]"]:checked').length;
+            if (checkedCount>0){
+              $(".btn-check-all-submit").removeClass('disabled');
+            }
+            else{
+              $(".btn-check-all-submit").addClass('disabled');
+            }
+        }
     })
 </script>

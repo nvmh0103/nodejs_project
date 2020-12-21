@@ -5,7 +5,7 @@ const handlebars = require('express-handlebars');
 const app = express();
 const route = require('./routes');
 const db = require('./config/db');
-const methodOverride=require('method-override');
+const methodOverride = require('method-override');
 const port = 3000;
 
 // connect db
@@ -30,9 +30,9 @@ app.engine(
     'hbs',
     handlebars({
         extname: '.hbs',
-        helpers:{
-            sum:(a,b)=>a+b,
-        }
+        helpers: {
+            sum: (a, b) => a + b,
+        },
     }),
 );
 
