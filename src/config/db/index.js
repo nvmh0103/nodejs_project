@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const logger = require('../../util/winston');
 
 async function connect() {
     try {
@@ -8,9 +9,9 @@ async function connect() {
             useFindAndModify: false,
             useCreateIndex: true,
         });
-        console.log('success');
+        logger.info("Connected to database");
     } catch (error) {
-        console.log('fail');
+        logger.error("Can't connect to database");
     }
 }
 

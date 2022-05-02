@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
-const morgan = require('morgan');
+const logger = require('./middleware/logger');
+const log = require('./util/winston')
 const handlebars = require('express-handlebars');
 const app = express();
 const route = require('./routes');
@@ -10,7 +11,9 @@ const port = 3000;
 
 // connect db
 
+
 db.connect();
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -43,4 +46,6 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 // routes init
 route(app);
 
-app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+app.use(logger);
+
+app.listen(port, () => log.info(`Listening at http://localhost:${port}`));
